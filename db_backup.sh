@@ -18,7 +18,7 @@ day_of_month=$(date +%d)
 
 run_hour="0300" ### 03:00 AM. Cron in this case: 0 3 * * *
 run_day="Sat"   ### Days are abbreviated
-run_mday="01"   ### First day of the month
+run_mday="01"   ### First day of the month (don't forget about February...)
 
 ### Set the location of your backups
 backup_location="/var/backups/mysql_backups" ### Make sure the user can write here
@@ -40,12 +40,16 @@ mkdir -p "${backup_location}"/monthly
 
 ### Define the Mysql dump function and archival of the dump
 function mysql_dump() {
+
+  ### Don't use a space between -p and the password. Also, special characters
+  ### in password must be escaped.
+
   mysqldump -u "${user}" -p"${password}" -B "${database}" > "${dumpname}".sql
   tar -czf "${dumpname}".sql.tar.gz "${dumpname}".sql
   rm -rf "${dumpname}".sql
 }
 
-### Define the daily backup
+### Define the daily backup function
 function daily() {
   if [[ "${hour}" == "${run_hour}" ]]; then
     cd "${backup_location}"/daily
@@ -58,7 +62,7 @@ function daily() {
 
 }
 
-### Define the weekly backup
+### Define the weekly backup function
 function weekly() {
   if [[ "${day_of_week}" == "${run_day}" && "${hour}" == "${run_hour}"  ]]; then
     cd "${backup_location}"/weekly
@@ -70,7 +74,7 @@ function weekly() {
   fi;
 }
 
-### Define the monthly backup
+### Define the monthly backup function
 function monthly() {
   if [[ "${day_of_month}" == "${run_mday}" && "${hour}" == "${run_hour}" ]]; then
     cd "${backup_location}"/monthly
