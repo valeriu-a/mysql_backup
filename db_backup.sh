@@ -17,11 +17,11 @@ day_of_month=$(date +%d)
 ### time as the run_hour (granularity is 1 minute)
 
 run_hour="0300" ### 03:00 AM. Cron in this case: 0 3 * * *
-run_day="Sat"
-run_mday="01"
+run_day="Sat"   ### Days are abbreviated
+run_mday="01"   ### First day of the month
 
 ### Set the location of your backups
-backup_location="/var/backups/mysql_backups"
+backup_location="/var/backups/mysql_backups" ### Make sure the user can write here
 
 ### Set the details for the DB that will be backed up
 user="user"
