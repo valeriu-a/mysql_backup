@@ -13,8 +13,8 @@ day_of_month=$(date +%d)
 ### Set the daily, weekly and monthly run. Make sure you set
 ### the run_hour, run_day and run_mday with with the exact
 ### same format as hour, day_of_week and day_of_month. Also,
-### make sure you set the chron to run exactly at the same
-### time as the run_hour.
+### make sure you set the cron to run exactly at the same
+### time as the run_hour (granularity is 1 minute)
 
 run_hour="0300" ### 03:00 AM. Cron in this case: 0 3 * * *
 run_day="Sat"
